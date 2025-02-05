@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/coffee_iv"
+        android:layout_width="50dp"
+        android:layout_height = "50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/img1"/>
+    <TextView
+        android:id="@+id/coffeeName_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:layout_toRightOf="@id/coffee_iv"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:text="Coffee Name"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/grey_trans"
+        android:layout_below="@id/coffee_iv"/>
+</RelativeLayout>
