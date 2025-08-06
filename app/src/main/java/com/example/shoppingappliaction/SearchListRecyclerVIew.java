@@ -15,17 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchListRecyclerVIew extends RecyclerView.Adapter<SearchListRecyclerVIew.ViewHolder> implements Filterable {
+public class SearchListRecyclerVIew extends RecyclerView.Adapter<SearchListRecyclerVIew.ViewHolder>  {
     private ArrayList<DetailsCoffeePojoClass> coffeeList;
     private ArrayList<DetailsCoffeePojoClass> coffeeListFull;
     CoffeeName coffeeName;
 
-    public SearchListRecyclerVIew(Context context, ArrayList<DetailsCoffeePojoClass> coffeeList,CoffeeName coffeeName) {
+    public SearchListRecyclerVIew(Context context, ArrayList<DetailsCoffeePojoClass> coffeeList, CoffeeName coffeeName) {
         this.coffeeList = coffeeList;
         this.coffeeName = coffeeName;
-        this.coffeeListFull = new ArrayList<>(coffeeList); // Copy of the original list
-        getFilter();
-
+        this.coffeeListFull = new ArrayList<>(coffeeList); // Original copy
     }
 
     @NonNull
@@ -41,54 +39,18 @@ public class SearchListRecyclerVIew extends RecyclerView.Adapter<SearchListRecyc
         holder.coffeeImageView.setImageBitmap(currentItem.getmImageView());
         holder.coffeeNameTextView.setText(currentItem.getCoffeeName());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                coffeeName.setcoffeeName(currentItem.getCoffeeName(),"search");
-
-            }
-        });
+        holder.itemView.setOnClickListener(v -> coffeeName.setcoffeeName(currentItem.getCoffeeName(), true));
     }
-
-
 
     @Override
     public int getItemCount() {
         return coffeeList.size();
     }
 
-    @Override
-    public Filter getFilter() {
-        return coffeeFilter;
+    public void filterList(ArrayList<DetailsCoffeePojoClass> filterdNames) {
+        this.coffeeList = filterdNames;
+        notifyDataSetChanged();
     }
-
-    private Filter coffeeFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            List<DetailsCoffeePojoClass> filteredList = new ArrayList<>();
-            if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(coffeeListFull);
-            } else {
-                String filterPattern = constraint.toString().toLowerCase().trim();
-                for (DetailsCoffeePojoClass item : coffeeListFull) {
-                    if (item.getCoffeeName().toLowerCase().contains(filterPattern)) {
-                        filteredList.add(item);
-                    }
-                }
-            }
-            FilterResults results = new FilterResults();
-            results.values = filteredList;
-
-            return results;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            coffeeList.clear();
-            coffeeList.addAll((List) results.values);
-            notifyDataSetChanged();
-        }
-    };
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView coffeeImageView;
@@ -101,4 +63,3 @@ public class SearchListRecyclerVIew extends RecyclerView.Adapter<SearchListRecyc
         }
     }
 }
-

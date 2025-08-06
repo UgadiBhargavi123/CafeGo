@@ -45,7 +45,7 @@ class CoffeListRecyclerView extends RecyclerView.Adapter<CoffeListRecyclerView.V
             isCoffeePosition =false;
             holder.coffe_name_tv.setTextColor(Color.WHITE);
             holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context1, R.color.orange));
-            coffeeNameListener.setcoffeeName(coffee_name.get(position),"");
+            coffeeNameListener.setcoffeeName(coffee_name.get(position),false);
 
         }
         else {
@@ -67,11 +67,26 @@ class CoffeListRecyclerView extends RecyclerView.Adapter<CoffeListRecyclerView.V
                 notifyDataSetChanged();
 
                 if (coffeeNameListener != null) {
-                    coffeeNameListener.setcoffeeName(coffee_name.get(position),"");
+                    coffeeNameListener.setcoffeeName(coffee_name.get(position),false);
                 }
             }
         });
     }
+
+    // In CoffeListRecyclerView.java
+    // Update list dynamically and auto-select first item
+    public void updateListAndSelectFirst(List<String> newList) {
+        this.coffee_name = newList;
+        selectedPosition = 0; // Auto-select first item
+        notifyDataSetChanged();
+
+        // Notify listener for first item selection
+        if (coffeeNameListener != null && !newList.isEmpty()) {
+            coffeeNameListener.setcoffeeName(newList.get(0), false);
+        }
+    }
+
+
 
     @Override
     public int getItemCount() {

@@ -163,7 +163,6 @@
                             android:textColorHint="#989898"
                             android:textColor="#989898"
                             android:textSize="14sp"
-                            android:text="hfdbhdbhhjdb"
                             android:fontFamily="@font/sora"
                             android:hint="Search Coffee"
                             android:layout_toRightOf="@id/search_iv"/>

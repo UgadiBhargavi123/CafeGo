@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ParticularCoffeeRecyclerView extends RecyclerView.Adapter<ParticularCoffeeRecyclerView.ParticularViewHolder> {
     Context context1;
@@ -79,5 +80,8 @@ public class ParticularCoffeeRecyclerView extends RecyclerView.Adapter<Particula
             addCart = itemView.findViewById(R.id.addCart);
             coffee_cardview = itemView.findViewById(R.id.coffee_cardview);
         }
+
     }
+
+
 }
