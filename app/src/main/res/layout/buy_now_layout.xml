@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Price"
-                android:fontFamily="@font/sora"
+
                 android:textSize="14sp"
                 android:textColor="#9B9B9B"/>
 
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:text="$ 4.53"
                 android:layout_below="@id/price_tv"
-                android:fontFamily="@font/sora"
+
                 android:textSize="18sp"
                 android:textFontWeight="600"
                 android:textColor="@color/orange"/>

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -28,12 +30,12 @@ public class HomeScreen extends AppCompatActivity implements CoffeeName, Particu
     List<String> coffee_list;
     ParticularCoffeeRecyclerView particularCoffeeRecyclerViewAdapter;
     ArrayList<DetailsCoffeePojoClass> detailsCoffeePojoClassArrayList, searchCoffeePojoClassArrayList;
-
+    TextView currentLocation_tv;
     ArrayAdapter<String> listViewAdapter;
     EditText coffeeName_et;
     ImageView search_iv;
     RelativeLayout search_rl;
-    String coffeeName;
+    String coffeeName,current_place;
     SearchListRecyclerVIew searchListRecyclerVIew;
     List<String> originalCoffeeList;  // ✅ Backup original list
 
@@ -62,6 +64,15 @@ public class HomeScreen extends AppCompatActivity implements CoffeeName, Particu
         search_rl = findViewById(R.id.search_rl);
         coffee_list_recyclerview = findViewById(R.id.coffee_list_recyclerview);
         particularCoffeeDetails_recyclerview = findViewById(R.id.particular_coffe_recyclerview);
+        currentLocation_tv = findViewById(R.id.current_location_tv);
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!= null){
+            current_place = bundle.getString("current_place");
+            if(current_place != null){
+                currentLocation_tv.setText(current_place);
+            }
+        }
 
         // Setup coffee list
         coffee_list_recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -172,11 +183,12 @@ public class HomeScreen extends AppCompatActivity implements CoffeeName, Particu
     }
 
     @Override
-    public void getParticularCoffeeDetails(String coffeeName, String extraDetails, String money, String add_view) {
+    public void getParticularCoffeeDetails(Uri bitmap, String coffeeName, String extraDetails, String money, String add_view) {
         if (!add_view.equalsIgnoreCase("add")) {
             Intent intent = new Intent(HomeScreen.this, ViewDetailsActivity.class);
             intent.putExtra("coffee_name", coffeeName);
             intent.putExtra("extra_details", extraDetails);
+            intent.putExtra("image_bitmap",bitmap.toString());
             intent.putExtra("money", money);
             startActivity(intent);
         }

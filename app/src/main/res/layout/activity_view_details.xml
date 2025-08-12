@@ -26,7 +26,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
 
-
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
            >
@@ -48,7 +47,6 @@
                 android:layout_above="@id/sub_txt"
                 android:layout_marginLeft="7dp"
                 android:layout_marginTop="6dp"
-                android:fontFamily="@font/sora"
                 android:text="Cappucino"
                 android:textColor="@color/black"
                 android:textFontWeight="600"
@@ -60,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/rating_rl"
                 android:layout_marginLeft="7dp"
-                android:fontFamily="@font/sora"
                 android:text="with chocolate"
                 android:textColor="#9B9B9B"
                 android:textFontWeight="400"
@@ -86,7 +83,6 @@
                     android:layout_toRightOf="@id/rating_iv"
                     android:layout_width="wrap_content"
                     android:textColor="@color/black"
-                    android:fontFamily="@font/sora"
                     android:layout_centerVertical="true"
 
                     android:textFontWeight="600"
@@ -98,7 +94,6 @@
                     android:id="@+id/numberOfOrders"
                     android:layout_toRightOf="@id/rating_tv"
                     android:layout_width="wrap_content"
-                    android:fontFamily="@font/sora"
                     android:textFontWeight="400"
                     android:layout_marginLeft="5dp"
                     android:layout_centerVertical="true"
@@ -156,7 +151,6 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/description_sub_txt_tv"
                 android:layout_marginTop="15dp"
-                android:fontFamily="@font/sora"
                 android:textFontWeight="600"
                 android:textSize="16sp"
                 android:textColor="@color/black"
@@ -167,7 +161,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:fontFamily="@font/sora"
                 android:textFontWeight="600"
                 android:maxLines="3"
                 android:textSize="14sp"
@@ -183,7 +176,6 @@
                 android:text="Size"
                 android:layout_above="@+id/size_ll"
                 android:textColor="@color/black"
-                android:fontFamily="@font/sora"
                 android:textFontWeight="600"
                 android:textSize="16sp"
                 android:layout_height="wrap_content"/>
@@ -197,6 +189,7 @@
                 android:weightSum="3">
 
                 <RelativeLayout
+                    android:id="@+id/s_size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -204,13 +197,13 @@
                     android:layout_marginBottom="20dp"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
-                    android:background="@drawable/grey_stroke">
+                    android:background="@drawable/orange_round_corners">
 
                     <TextView
+                        android:id="@+id/s_tv"
                         android:layout_width="match_parent"
                         android:layout_height="43dp"
-                        android:fontFamily="@font/sora"
-
+                        android:textColor="@color/white"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="S"/>
@@ -218,6 +211,8 @@
 
                 </RelativeLayout>
                 <RelativeLayout
+                    android:id="@+id/m_size"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -228,9 +223,10 @@
                     android:background="@drawable/grey_stroke">
 
                     <TextView
+                        android:id="@+id/m_tv"
+
                         android:layout_width="match_parent"
                         android:layout_height="43dp"
-                        android:fontFamily="@font/sora"
                         android:gravity="center"
                         android:textSize="14sp"
                         android:text="M"/>
@@ -238,6 +234,8 @@
 
                 </RelativeLayout>
                 <RelativeLayout
+                    android:id="@+id/l_size"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -246,9 +244,10 @@
                     android:background="@drawable/grey_stroke">
 
                     <TextView
+                        android:id="@+id/l_tv"
+
                         android:layout_width="match_parent"
                         android:layout_height="43dp"
-                        android:fontFamily="@font/sora"
 
                         android:gravity="center"
                         android:textSize="14sp"
@@ -287,20 +286,19 @@
                 android:layout_weight="4">
 
                 <TextView
-                    android:id="@+id/price_tv"
+                    android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sora"
                     android:text="Price"
                     android:textColor="#9B9B9B"
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/price_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$ 4.53"
-                    android:layout_below="@id/price_tv"
-                    android:fontFamily="@font/sora"
+                    android:layout_below="@id/price"
                     android:textSize="18sp"
                     android:textFontWeight="600"
                     android:textColor="@color/orange"/>

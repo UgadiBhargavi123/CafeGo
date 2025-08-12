@@ -23,7 +23,7 @@
         android:layout_marginEnd="25dp"
         android:layout_gravity="bottom"
         android:layout_above="@id/prompt_tv"
-        android:fontFamily="@font/sora"
+
         android:gravity="center"
         android:text="Coffee so good, \n your taste buds \n will love it."
         android:textColor="@color/ash"
@@ -38,7 +38,7 @@
         android:layout_marginTop="25dp"
         android:textFontWeight="400"
         android:layout_marginEnd="50dp"
-        android:fontFamily="@font/sora"
+
         android:gravity="center"
         android:text="The best grain, the finest roast, the powerful flavor."
         android:textColor="@color/ash"
@@ -54,7 +54,7 @@
         android:layout_marginEnd="25dp"
         android:layout_marginBottom="35dp"
         android:background="@drawable/orange_round_corners"
-        android:fontFamily="@font/sora"
+
         android:gravity="center"
         android:text="Get Started"
         android:textColor="@color/white"

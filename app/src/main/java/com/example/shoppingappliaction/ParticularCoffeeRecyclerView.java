@@ -1,6 +1,8 @@
 package com.example.shoppingappliaction;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,25 +45,42 @@ public class ParticularCoffeeRecyclerView extends RecyclerView.Adapter<Particula
     public void onBindViewHolder(@NonNull ParticularCoffeeRecyclerView.ParticularViewHolder holder, int position) {
         holder.coffee_img.setImageBitmap(detailsCoffeePojoClassArrayList.get(position).getmImageView());
 
-      holder.coffee_name_tv.setText(detailsCoffeePojoClassArrayList.get(position).getCoffeeName());
-      holder.coffee_name_details_tv.setText(detailsCoffeePojoClassArrayList.get(position).getExtraDetails());
-      holder.money_tv.setText("$ "+detailsCoffeePojoClassArrayList.get(position).getMoney());
+        holder.coffee_name_tv.setText(detailsCoffeePojoClassArrayList.get(position).getCoffeeName());
+        holder.coffee_name_details_tv.setText(detailsCoffeePojoClassArrayList.get(position).getExtraDetails());
+        holder.money_tv.setText("$ " + detailsCoffeePojoClassArrayList.get(position).getMoney());
 
-      holder.addCart.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              particularCoffeeDetails1.getParticularCoffeeDetails(detailsCoffeePojoClassArrayList.get(position).getCoffeeName(),detailsCoffeePojoClassArrayList.get(position).getExtraDetails(),detailsCoffeePojoClassArrayList.get(position).getMoney(),"add");
-          }
-      });
+        View.OnClickListener clickListener = v -> {
+            try {
+                // Save bitmap to cache
+                File cachePath = new File(context1.getCacheDir(), "images");
+                cachePath.mkdirs();
+                File file = new File(cachePath, "coffee.png");
+                try (FileOutputStream stream = new FileOutputStream(file)) {
+                    detailsCoffeePojoClassArrayList.get(position)
+                            .getmImageView()
+                            .compress(Bitmap.CompressFormat.PNG, 100, stream);
+                }
 
-      holder.coffee_cardview.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              particularCoffeeDetails1.getParticularCoffeeDetails(detailsCoffeePojoClassArrayList.get(position).getCoffeeName(),detailsCoffeePojoClassArrayList.get(position).getExtraDetails(),detailsCoffeePojoClassArrayList.get(position).getMoney(),"view");
+                // Create URI for the saved file
+                Uri imageUri = Uri.fromFile(file);
 
-          }
-      });
+                // Call interface method with URI string instead of byte[]
+                String action = (v.getId() == R.id.addCart) ? "add" : "view";
+                particularCoffeeDetails1.getParticularCoffeeDetails(
+                        imageUri,
+                        detailsCoffeePojoClassArrayList.get(position).getCoffeeName(),
+                        detailsCoffeePojoClassArrayList.get(position).getExtraDetails(),
+                        detailsCoffeePojoClassArrayList.get(position).getMoney(),
+                        action
+                );
 
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        };
+
+        holder.addCart.setOnClickListener(clickListener);
+        holder.coffee_cardview.setOnClickListener(clickListener);
     }
 
     @Override

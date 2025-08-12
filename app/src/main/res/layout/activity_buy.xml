@@ -41,7 +41,7 @@
                     android:layout_marginLeft="1dp"
                     android:id="@+id/search"
                     android:textSize="16sp"
-                    android:fontFamily="@font/sora"
+
                     android:textFontWeight="600"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -58,7 +58,7 @@
                     android:id="@+id/offer"
                     android:layout_width="0dp"
                     android:textSize="16sp"
-                    android:fontFamily="@font/sora"
+
                     android:textFontWeight="600"
                     android:layout_height="40dp"
                     android:layout_weight="1"
@@ -77,7 +77,7 @@
                 android:textSize="16sp"
                 android:layout_below="@id/toggle"
                 android:text="Delivery Address"
-                android:fontFamily="@font/sora"
+
                 android:textFontWeight="600"
                 />
 
@@ -88,7 +88,7 @@
                 android:textSize="14sp"
                 android:id="@+id/address1"
                 android:textColor="#303336"
-                android:fontFamily="@font/sora"
+
                 android:textFontWeight="600"
                 android:layout_marginTop="15dp"
                 android:text="Address1"/>
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="#808080"
-                android:fontFamily="@font/sora"
+
                 android:textFontWeight="400"
                 android:text="Address1"/>
 
@@ -135,7 +135,7 @@
                     android:layout_toRightOf="@id/edit_iv"
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="6dp"
-                    android:fontFamily="@font/sora"
+
                     android:textSize="12sp"
                     android:textFontWeight="400"
                     android:layout_height="wrap_content"
@@ -166,7 +166,7 @@
                     android:layout_toRightOf="@id/notes_iv"
                     android:layout_width="wrap_content"
                     android:layout_marginLeft="6dp"
-                    android:fontFamily="@font/sora"
+
                     android:textSize="12sp"
                     android:textFontWeight="400"
                     android:layout_height="wrap_content"
@@ -316,7 +316,7 @@
                 android:textSize="14sp"
                 android:textFontWeight="600"
                 android:textColor="@color/black"
-                android:fontFamily="@font/sora"
+
                 android:text="1 Discount is applied"/>
 
             <ImageView
@@ -340,7 +340,7 @@
             android:layout_marginTop="10dp"
             android:textSize="16sp"
             android:textColor="@color/black"
-            android:fontFamily="@font/sora"
+
             android:textFontWeight="600"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"/>
@@ -359,7 +359,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:text="Price"
-                android:fontFamily="@font/sora"
+
                 android:textFontWeight="400"
                 android:textColor="@color/black"/>
 
@@ -369,7 +369,7 @@
                 android:textSize="14sp"
                 android:layout_alignParentRight="true"
                 android:text="$ 4.56"
-                android:fontFamily="@font/sora"
+
                 android:textFontWeight="600"
                 android:textColor="@color/black"/>
 
@@ -388,7 +388,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:text="Delivery Fee"
-                android:fontFamily="@font/sora"
+
                 android:textFontWeight="400"
                 android:textColor="@color/black"/>
 
@@ -398,7 +398,7 @@
                 android:textSize="14sp"
                 android:layout_alignParentRight="true"
                 android:text="$ 1.0"
-                android:fontFamily="@font/sora"
+
                 android:textFontWeight="600"
                 android:textColor="@color/black"/>
 
@@ -432,7 +432,7 @@
             android:layout_height="wrap_content"
             android:text="$ 5.56"
             android:layout_marginLeft="30dp"
-            android:fontFamily="@font/sora"
+
             android:textFontWeight="600"
             android:textSize="14sp"
             android:textColor="@color/black"
@@ -469,7 +469,7 @@
                     android:layout_marginLeft="1dp"
                     android:id="@+id/cash"
                     android:textSize="12sp"
-                    android:fontFamily="@font/sora"
+
                     android:textFontWeight="600"
                     android:layout_width="0dp"
                     android:layout_height="24dp"
@@ -486,7 +486,7 @@
                     android:id="@+id/cash_tv"
                     android:layout_width="0dp"
                     android:textSize="12sp"
-                    android:fontFamily="@font/sora"
+
                     android:textFontWeight="600"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -509,7 +509,7 @@
             android:layout_marginRight="30dp"
             android:textAlignment="center"
             android:textFontWeight="600"
-            android:fontFamily="@font/sora"
+
             android:textSize="16sp"
             android:text="Order"
             android:textAllCaps="false"
