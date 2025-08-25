@@ -1,6 +1,8 @@
 package com.example.shoppingappliaction;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,18 +14,22 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeScreen extends AppCompatActivity implements CoffeeName, ParticularCoffeeDetails {
+public class HomeScreen extends AppCompatActivity   {
 
     RecyclerView coffee_list_recyclerview, particularCoffeeDetails_recyclerview, searchRecyclerVIew;
     CoffeListRecyclerView coffee_list_Adapter;
@@ -35,10 +41,13 @@ public class HomeScreen extends AppCompatActivity implements CoffeeName, Particu
     EditText coffeeName_et;
     ImageView search_iv;
     RelativeLayout search_rl;
+    BottomNavigationView bottomNavigationView;
     String coffeeName,current_place;
     SearchListRecyclerVIew searchListRecyclerVIew;
     List<String> originalCoffeeList;  // ✅ Backup original list
+    public static ArrayList<DetailsCoffeePojoClass> userlikeArrayList = new ArrayList<>();
 
+    FrameLayout home_rl;
 
     private TextWatcher textWatcher; // ✅ Fixed initialization
 
@@ -47,164 +56,41 @@ public class HomeScreen extends AppCompatActivity implements CoffeeName, Particu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-        // Setup UI
-        coffee_list = new ArrayList<>();
-        coffee_list.add("Cappuccino");
-        coffee_list.add("Espresso");
-        coffee_list.add("Latte");
-        coffee_list.add("Mochiato");
+        bottomNavigationView = findViewById(R.id.navigationBar);
 
-        originalCoffeeList = new ArrayList<>(coffee_list);
-
-        detailsCoffeePojoClassArrayList = new ArrayList<>();
-
-        coffeeName_et = findViewById(R.id.searchView);
-        search_iv = findViewById(R.id.search_iv);
-        searchRecyclerVIew = findViewById(R.id.recyclerView);
-        search_rl = findViewById(R.id.search_rl);
-        coffee_list_recyclerview = findViewById(R.id.coffee_list_recyclerview);
-        particularCoffeeDetails_recyclerview = findViewById(R.id.particular_coffe_recyclerview);
-        currentLocation_tv = findViewById(R.id.current_location_tv);
-
-        Bundle bundle = getIntent().getExtras();
-        if(bundle!= null){
-            current_place = bundle.getString("current_place");
-            if(current_place != null){
-                currentLocation_tv.setText(current_place);
-            }
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.home_rl, new HomeFragment())
+                    .commit();
+            bottomNavigationView.setSelectedItemId(R.id.like); // highlight "Home" tab
         }
 
-        // Setup coffee list
-        coffee_list_recyclerview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        coffee_list_Adapter = new CoffeListRecyclerView(coffee_list, true, this, this);
-        coffee_list_recyclerview.setAdapter(coffee_list_Adapter);
 
-        // Setup search list
-        searchCoffeePojoClassArrayList = new ArrayList<>();
-        searchCoffeePojoClassArrayList.add(new DetailsCoffeePojoClass(BitmapFactory.decodeResource(getResources(), R.drawable.cap_1), "Cappuccino", "", ""));
-        searchCoffeePojoClassArrayList.add(new DetailsCoffeePojoClass(BitmapFactory.decodeResource(getResources(), R.drawable.esp_1), "Espresso", "", ""));
-        searchCoffeePojoClassArrayList.add(new DetailsCoffeePojoClass(BitmapFactory.decodeResource(getResources(), R.drawable.lat_1), "Latte", "", ""));
-        searchCoffeePojoClassArrayList.add(new DetailsCoffeePojoClass(BitmapFactory.decodeResource(getResources(), R.drawable.moc_1), "Mochiato", "", ""));
-
-        searchListRecyclerVIew = new SearchListRecyclerVIew(this, searchCoffeePojoClassArrayList, this);
-        searchRecyclerVIew.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        searchRecyclerVIew.setAdapter(searchListRecyclerVIew);
-
-        // ✅ Proper TextWatcher initialization
-        textWatcher = new TextWatcher() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.home:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.home_rl, new HomeFragment())
+                                .commit();
+                        Toast.makeText(HomeScreen.this, "Home", Toast.LENGTH_SHORT).show();
 
-            @Override
-            public void onTextChanged(CharSequence s, int i, int i1, int i2) {
-                if (s.toString().isEmpty()) {
-                    // ✅ Restore original list
-                    coffee_list_recyclerview.post(() -> {
-                        coffee_list_Adapter.updateListAndSelectFirst(originalCoffeeList);
-                    });
-                    searchRecyclerVIew.setVisibility(View.GONE);
-                } else {
-                    searchRecyclerVIew.setVisibility(View.VISIBLE);
+                        break;
+                    case R.id.like:
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.home_rl, new LikeFragment(HomeScreen.this,userlikeArrayList))
+                                .commit();
+
+                        Toast.makeText(HomeScreen.this, "Like", Toast.LENGTH_SHORT).show();
+                        break;
                 }
+                return true;
             }
 
-            @Override
-            public void afterTextChanged(Editable editable) {
-                filter(editable.toString());
-            }
-        };
-        coffeeName_et.addTextChangedListener(textWatcher);
+            ;
+        });
 
-        // Setup details recycler view
-        particularCoffeeDetails_recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
     }
 
-    // ✅ Called when coffee is selected from list or search
-    @Override
-    public void setcoffeeName(String coffeeName, boolean fromSearchList) {
-        if (fromSearchList) {
-            // Only update the EditText if called from search list click
-            coffeeName_et.removeTextChangedListener(textWatcher);
-            coffeeName_et.setText(coffeeName);
-            coffeeName_et.setSelection(coffeeName.length()); // move cursor to end
-            coffeeName_et.addTextChangedListener(textWatcher);
-            searchRecyclerVIew.setVisibility(View.GONE);
-            coffee_list_recyclerview.post(() -> {
-                List<String> newCoffeeList = new ArrayList<>();
-                newCoffeeList.add(coffeeName);
-                coffee_list_Adapter.updateListAndSelectFirst(newCoffeeList);
-            });
-        }
-
-
-        // Now load the correct coffee variant details
-        detailsCoffeePojoClassArrayList.clear();
-
-        Bitmap bitmap = null, bitmap1 = null, bitmap2 = null, bitmap3 = null;
-
-        if(coffeeName.equalsIgnoreCase("Cappuccino")){
-
-            bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.img1);
-            bitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.cap_1);
-            bitmap2 = BitmapFactory.decodeResource(getResources(),R.drawable.cap_2);
-            bitmap3 = BitmapFactory.decodeResource(getResources(),R.drawable.cap_3);
-        }
-        else if(coffeeName.equalsIgnoreCase("Espresso")) {
-            bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.esp_1);
-            bitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.esp_2);
-            bitmap2 = BitmapFactory.decodeResource(getResources(),R.drawable.exp_3);
-            bitmap3 = BitmapFactory.decodeResource(getResources(),R.drawable.esp_4);
-        }
-        else if(coffeeName.equalsIgnoreCase("Latte")) {
-            bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.lat_1);
-            bitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.lat_2);
-            bitmap2 = BitmapFactory.decodeResource(getResources(),R.drawable.lat_3);
-            bitmap3 = BitmapFactory.decodeResource(getResources(),R.drawable.lat_4);
-        }
-        else {
-            bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.moc_1);
-            bitmap1 = BitmapFactory.decodeResource(getResources(),R.drawable.moc_2);
-            bitmap2 = BitmapFactory.decodeResource(getResources(),R.drawable.moc_3);
-            bitmap3 = BitmapFactory.decodeResource(getResources(),R.drawable.moc_4);
-        }
-
-        // Add variants
-        detailsCoffeePojoClassArrayList.add(new DetailsCoffeePojoClass(bitmap, coffeeName, "with Chocolate", "4.53"));
-        detailsCoffeePojoClassArrayList.add(new DetailsCoffeePojoClass(bitmap1, coffeeName, "with Oreo", "4.73"));
-        detailsCoffeePojoClassArrayList.add(new DetailsCoffeePojoClass(bitmap2, coffeeName, "with KitKat", "4.83"));
-        detailsCoffeePojoClassArrayList.add(new DetailsCoffeePojoClass(bitmap3, coffeeName, "with Milk", "4.93"));
-
-        if (particularCoffeeRecyclerViewAdapter == null) {
-            particularCoffeeRecyclerViewAdapter = new ParticularCoffeeRecyclerView(detailsCoffeePojoClassArrayList, this, this);
-            particularCoffeeDetails_recyclerview.setAdapter(particularCoffeeRecyclerViewAdapter);
-        } else {
-            particularCoffeeRecyclerViewAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void getParticularCoffeeDetails(Uri bitmap, String coffeeName, String extraDetails, String money, String add_view) {
-        if (!add_view.equalsIgnoreCase("add")) {
-            Intent intent = new Intent(HomeScreen.this, ViewDetailsActivity.class);
-            intent.putExtra("coffee_name", coffeeName);
-            intent.putExtra("extra_details", extraDetails);
-            intent.putExtra("image_bitmap",bitmap.toString());
-            intent.putExtra("money", money);
-            startActivity(intent);
-        }
-        Toast.makeText(this, coffeeName + "__" + extraDetails + "__" + money + "__" + add_view, Toast.LENGTH_SHORT).show();
-    }
-
-    // ✅ Fixed filter method
-    private void filter(String text) {
-        ArrayList<DetailsCoffeePojoClass> filteredList = new ArrayList<>();
-
-        for (DetailsCoffeePojoClass item : searchCoffeePojoClassArrayList) {
-            if (item.getCoffeeName().toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(item);
-            }
-        }
-
-        searchListRecyclerVIew.filterList(filteredList);
-    }
 }

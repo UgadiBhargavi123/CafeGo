@@ -1,5 +1,7 @@
 package com.example.shoppingappliaction;
 
+import static com.example.shoppingappliaction.HomeScreen.userlikeArrayList;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -9,10 +11,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.io.IOException;
 
 public class ViewDetailsActivity extends AppCompatActivity {
 
@@ -21,6 +26,7 @@ public class ViewDetailsActivity extends AppCompatActivity {
     TextView price_tv,coffeeName_tv,sub_txtTv,s_tv,m_tv,l_tv;
     float price;
     String byteArray;
+    DetailsCoffeePojoClass detailsCoffeePojoClass;
     String coffee_name="",extra_details="",money="";
 
     @Override
@@ -47,8 +53,18 @@ public class ViewDetailsActivity extends AppCompatActivity {
             extra_details = bundle.getString("extra_details");
             money = bundle.getString("money");
             byteArray = bundle.getString("image_bitmap");
+
             Uri uri = Uri.parse(byteArray);
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             coffee_iv.setImageURI(uri);
+             detailsCoffeePojoClass = new DetailsCoffeePojoClass(bitmap,coffee_name,extra_details,money);
+
         }
         if(!coffee_name.isEmpty()){
             coffeeName_tv.setText(coffee_name);
@@ -122,6 +138,8 @@ public class ViewDetailsActivity extends AppCompatActivity {
         heartView_iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+               userlikeArrayList.add(detailsCoffeePojoClass);
+                finish();
 
             }
         });

@@ -29,6 +29,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.gms.location.LocationRequest;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
