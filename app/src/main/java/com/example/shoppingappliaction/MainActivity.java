@@ -15,6 +15,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
     TextView getStarted_tv;
     FusedLocationProviderClient mFusedLocationClient;
     int PERMISSION_ID = 44;
-    String currentPlace="";
+    public static String currentPlace="";
+    public static String complete_address ="";
 
 
     @Override
@@ -94,8 +96,9 @@ public class MainActivity extends AppCompatActivity {
                                 List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                                 if (addresses != null && !addresses.isEmpty()) {
                                     String addressLine = addresses.get(0).getAddressLine(0);
-                                     currentPlace = addresses.get(0).getLocality(); // e.g., "Karnataka"
-
+                                     currentPlace = addresses.get(0).getSubLocality(); // e.g., "Karnataka"
+                                    complete_address = addressLine;
+                                    Log.e("Address",addressLine+"");
 //                                    Toast.makeText(MainActivity.this,
 //                                            "Address: " + currentPlace, Toast.LENGTH_LONG).show();
                                 } else {

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/verifyemail_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="20dp"
+                android:text="Edit Address"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/close_iv"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="22dp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:src="@drawable/ic_baseline_close_24"
+                />
+        </RelativeLayout>
+
+        <!-- Place -->
+        <EditText
+            android:id="@+id/current_place_et"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_border"
+            android:hint="Place"
+            android:inputType="text"
+            android:singleLine="true"
+            android:paddingHorizontal="15dp"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <!-- Complete Address -->
+        <EditText
+            android:id="@+id/complete_place_et"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_border"
+            android:hint="Complete Address"
+            android:inputType="text"
+            android:singleLine="true"
+            android:paddingHorizontal="15dp"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <!-- Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/verify_otp_btn"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="15dp"
+            android:text="Continue"
+            android:backgroundTint="@color/orange"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+             />
+
+    </LinearLayout>
+</ScrollView>

@@ -42,10 +42,14 @@ public class HomeFragment extends Fragment implements CoffeeName,ParticularCoffe
     ImageView search_iv;
     RelativeLayout search_rl;
     BottomNavigationView bottomNavigationView;
-    String coffeeName,current_place;
+    String coffeeName,current_place_new;
     TextWatcher textWatcher;
     SearchListRecyclerVIew searchListRecyclerVIew;
     List<String> originalCoffeeList;  // ✅ Backup original list
+
+    public HomeFragment(String current_place) {
+        current_place_new = current_place;
+    }
 
     @Nullable
     @Override
@@ -60,7 +64,6 @@ public class HomeFragment extends Fragment implements CoffeeName,ParticularCoffe
         originalCoffeeList = new ArrayList<>(coffee_list);
 
         detailsCoffeePojoClassArrayList = new ArrayList<>();
-
         coffeeName_et = view.findViewById(R.id.searchView);
         search_iv = view.findViewById(R.id.search_iv);
         searchRecyclerVIew = view.findViewById(R.id.recyclerView);
@@ -68,6 +71,9 @@ public class HomeFragment extends Fragment implements CoffeeName,ParticularCoffe
         coffee_list_recyclerview = view.findViewById(R.id.coffee_list_recyclerview);
         particularCoffeeDetails_recyclerview = view.findViewById(R.id.particular_coffe_recyclerview);
         currentLocation_tv = view.findViewById(R.id.current_location_tv);
+        if(!current_place_new.isEmpty()){
+            currentLocation_tv.setText(current_place_new);
+        }
         // Setup coffee list
         coffee_list_recyclerview.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         coffee_list_Adapter = new CoffeListRecyclerView(coffee_list, true, getContext(),this );

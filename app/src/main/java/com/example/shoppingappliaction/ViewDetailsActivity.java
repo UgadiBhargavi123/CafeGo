@@ -1,5 +1,6 @@
 package com.example.shoppingappliaction;
 
+import static com.example.shoppingappliaction.HomeScreen.usercartArrayList;
 import static com.example.shoppingappliaction.HomeScreen.userlikeArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,13 +19,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 public class ViewDetailsActivity extends AppCompatActivity {
 
     RelativeLayout buyNow_tv,s_size,m_size,l_size;
-    ImageView back_iv,heartView_iv,coffee_iv;
+    ImageView back_iv,heartView_iv,coffee_iv,addCart_iv;
     TextView price_tv,coffeeName_tv,sub_txtTv,s_tv,m_tv,l_tv;
     float price;
+    boolean cart_like_view;
     String byteArray;
     DetailsCoffeePojoClass detailsCoffeePojoClass;
     String coffee_name="",extra_details="",money="";
@@ -38,6 +41,7 @@ public class ViewDetailsActivity extends AppCompatActivity {
         sub_txtTv = findViewById(R.id.sub_txt);
         back_iv = findViewById(R.id.back_iv);
         heartView_iv = findViewById(R.id.like_iv);
+        addCart_iv = findViewById(R.id.addCart_iv);
         price_tv = findViewById(R.id.price_tv);
         s_size = findViewById(R.id.s_size);
         m_size = findViewById(R.id.m_size);
@@ -144,11 +148,24 @@ public class ViewDetailsActivity extends AppCompatActivity {
             }
         });
 
+        addCart_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               usercartArrayList.add(detailsCoffeePojoClass);
+                finish();
+
+            }
+        });
+
         buyNow_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent  intent = new Intent(ViewDetailsActivity.this,BuyActivity.class);
+                Intent intent = new Intent(ViewDetailsActivity.this, BuyActivity.class);
+                intent.putExtra("coffee_name",coffee_name);
+                intent.putExtra("extra_details",extra_details);
+                intent.putExtra("money",price);
+                intent.putExtra("image_bitmap",byteArray);
                 startActivity(intent);
             }
         });
